@@ -1,0 +1,43 @@
+
+@host = http://localhost
+@port = 5028
+
+@Restaurants.API_HostAddress = https://localhost:7208
+
+GET {{Restaurants.API_HostAddress}}/api/weatherforecast/example
+Accept: application/json
+ProjectUrl: {{$projectUrl}}
+Guid: {{$guid}}
+LocalDate:{{$datetime iso8601}}
+Random-int: {{$randomInt}}
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/weatherforecast/23/example
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/weatherforecast/23/currentDay/max=15
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/weatherforecast/
+Content-Type: application/json
+
+"Šimon"
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/weatherforecast/generate?count=3&minTemperature=20&maxTemperature=50
+
+###
+@count=0
+POST {{Restaurants.API_HostAddress}}/api/weatherforecast/generate?count=-2
+Content-Type: application/json
+
+{
+  "min": -23,
+  "max": 100
+}
+
+###
