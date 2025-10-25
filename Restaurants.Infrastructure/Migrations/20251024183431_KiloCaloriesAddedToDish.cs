@@ -23,6 +23,6 @@ namespace Restaurants.Infrastructure.Migrations
             migrationBuilder.DropColumn(
                 name: "KiloCalories",
                 table: "Dishes");
-        }
+        } 
     }
 }
