@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Restaurants.Application\Restaurants.Application.csproj" />
     <ProjectReference Include="..\Restaurants.Domain\Restaurants.Domain.csproj" />
     <ProjectReference Include="..\Restaurants.Infrastructure\Restaurants.Infrastructure.csproj" />
   </ItemGroup>
@@ -16,6 +17,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
   
 </Project>

@@ -1,16 +1,14 @@
 
 @host = http://localhost
 @port = 5028
+@id=3
 
 @Restaurants.API_HostAddress = https://localhost:7208
-
-
 
 GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###
-
-@id=1
+ 
 GET {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
 
 ###
@@ -19,7 +17,44 @@ POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 
 {
-
+  "name": "Test",
+  "description": "Testovací restaurace.",
+  "category": "Italian",
+  "hasDelivery": true,
+  "city": "Praha - Test",
+  "street": "Plzeò - Test",
+  "postalCode": "00-000"
 }
+
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
+
+###
+
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/99
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "description": "Testovací restaurace.",
+    "category": "Italian",
+    "hasDelivery": true
+}
+
+###
+POST {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}/dishes
+Content-Type: application/json
+
+{
+  "Name": "Spaghetti Bolognese",
+  "Description": "Classic Italian pasta dish with rich meat sauce",
+  "Price": 349,
+  "KiloCalories": 650
+}
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes/2
 
 ###
