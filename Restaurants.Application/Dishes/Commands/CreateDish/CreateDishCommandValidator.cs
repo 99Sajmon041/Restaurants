@@ -15,3 +15,4 @@ public class CreateDishCommandValidator : AbstractValidator<CreateDishCommand>
             .WithMessage("KiloCalories must be a non-negative number.");
     }
 }
+ 

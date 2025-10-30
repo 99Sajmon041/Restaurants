@@ -2,14 +2,18 @@
 @host = http://localhost
 @port = 5028
 @id=3
+@token = CfDJ8GsrYTr5WJ9OnYh5kwI25GaxBsgIKAnjqX5FFwFlWxosyy4XYfvNm_JDu5NA9F9vlJpmgjZfU3MEPClr25HZbrcz5a_jPEWemH85ndCDd6wfhltI7cUVbbNLYOH5CX7FOh0d9cUBZcZGJa1cCgxW5n-RS_suZVCBWcfCfxZqJccv3cEqfiSpjxKjeKw9g_8b5zZxDrWlXeZKarjJhyXXl7b-QNUfG87qct4NXvDAckEtmi49xELGjORzWUn3MjL3D_VLty_vEMqrOlU4xF-KtaDlN9B50VTiHWiPvl0Rat3nWNNnhUqDAbx7tHW3RazPwKjpfzTqNug3WDhEHgqYjr9QhxqukEnLDg8lgkyWBFtClka6zFc8IFd_YHO2cINddwvnaOuKeUu_WZmZATZck43Qdj-rXNKsxWfgWGskU1HNPL47VrlQitLwU_1pLY369HqpR7rVjY6oxxgvTD2AT-y3LGCabkZqF6yQ5ADscgtIXeKCg5aJoGHMm_PWo739xQmoVfUr2rYZHrxV7cCVR1h-QSoUnJ6fzulMtsijgf4jhTtUVFLdEPdSKQziyNvz4QjNqaQ9ByNY9TQWJ00ICogzwA2lOugWOUGhdqjsdwY7Fvfzo-KzNbIDjtDULkMbB_WjGa1m6r0B10ruWgMF8K29mATdO9DOn6-8jJU5sEKVONC5riIvgq4UcCyKlFZnsg
+//je tøeba získat nový token, má platnost 3600 ms => 1 hodinu
 
 @Restaurants.API_HostAddress = https://localhost:7208
 
 GET {{Restaurants.API_HostAddress}}/api/restaurants
+Authorization: Bearer {{token}}
 
 ###
  
 GET {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
+Authorization: Bearer {{token}}
 
 ###
 
@@ -56,5 +60,36 @@ Content-Type: application/json
 ###
 
 GET {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes/2
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/identity/register
+Content-Type: application/json
+
+{
+  "email": "testuser@test.com",
+  "password": "Password1!"
+}
+
+### 
+
+    
+POST {{Restaurants.API_HostAddress}}/api/identity/login
+Content-Type: application/json
+
+{
+  "email": "testuser@test.com",
+  "password": "Password1!"
+}
+
+###
+PATCH {{Restaurants.API_HostAddress}}/api/identity/user
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dateOfBirth": "1996-08-21",
+  "nationality": "Czech"
+}
 
 ###
