@@ -7,6 +7,8 @@ using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantbyId;
+using Restaurants.Domain.Constants;
+using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.API.Controllers;
 
@@ -16,7 +18,8 @@ namespace Restaurants.API.Controllers;
 public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [AllowAnonymous]
+    //[AllowAnonymous]
+    [Authorize(Policy = PolicyNames.CreatedAtleast2Restaurants)]
     public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
     {
         var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
@@ -24,20 +27,21 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [AllowAnonymous]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<ActionResult<RestaurantDto>> GetById([FromRoute]int id)
     {
-        //var userId = User.Claims.FirstOrDefault(c => c.Type == "<id claim type>")!.Value;
         var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
         return Ok(restaurant);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateRestaurant([FromBody]CreateRestaurantCommand command)
+    [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateRestaurant([FromBody]UpdateRestaurantCommand command, int id)
     {
-        int id = await mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id }, null);
-
+        command.Id = id;
+        await mediator.Send(command);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
@@ -49,13 +53,12 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    [HttpPatch("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateRestaurant([FromBody]UpdateRestaurantCommand command, int id)
+    [HttpPost]
+    [Authorize(Roles = UserRoles.Owner)]
+    public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantCommand command)
     {
-        command.Id = id;
-        await mediator.Send(command);
-        return NotFound();
+        int id = await mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { id }, null);
+
     }
 }

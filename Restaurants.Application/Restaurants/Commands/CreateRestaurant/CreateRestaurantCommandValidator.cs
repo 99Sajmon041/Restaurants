@@ -4,7 +4,7 @@ namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
 public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
 {
-    private readonly List<string> validCategories = ["Italian", "Mexican", "Japanese", "American", "Indian"];
+    private readonly List<string> validCategories = ["Italian", "Mexican", "Japanese", "American", "Indian", "Czech"];
     public CreateRestaurantCommandValidator()
     {
         RuleFor(dto => dto.Name)

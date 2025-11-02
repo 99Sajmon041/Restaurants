@@ -1,8 +1,8 @@
 
 @host = http://localhost
 @port = 5028
-@id=3
-@token = CfDJ8GsrYTr5WJ9OnYh5kwI25GaxBsgIKAnjqX5FFwFlWxosyy4XYfvNm_JDu5NA9F9vlJpmgjZfU3MEPClr25HZbrcz5a_jPEWemH85ndCDd6wfhltI7cUVbbNLYOH5CX7FOh0d9cUBZcZGJa1cCgxW5n-RS_suZVCBWcfCfxZqJccv3cEqfiSpjxKjeKw9g_8b5zZxDrWlXeZKarjJhyXXl7b-QNUfG87qct4NXvDAckEtmi49xELGjORzWUn3MjL3D_VLty_vEMqrOlU4xF-KtaDlN9B50VTiHWiPvl0Rat3nWNNnhUqDAbx7tHW3RazPwKjpfzTqNug3WDhEHgqYjr9QhxqukEnLDg8lgkyWBFtClka6zFc8IFd_YHO2cINddwvnaOuKeUu_WZmZATZck43Qdj-rXNKsxWfgWGskU1HNPL47VrlQitLwU_1pLY369HqpR7rVjY6oxxgvTD2AT-y3LGCabkZqF6yQ5ADscgtIXeKCg5aJoGHMm_PWo739xQmoVfUr2rYZHrxV7cCVR1h-QSoUnJ6fzulMtsijgf4jhTtUVFLdEPdSKQziyNvz4QjNqaQ9ByNY9TQWJ00ICogzwA2lOugWOUGhdqjsdwY7Fvfzo-KzNbIDjtDULkMbB_WjGa1m6r0B10ruWgMF8K29mATdO9DOn6-8jJU5sEKVONC5riIvgq4UcCyKlFZnsg
+@id = 2
+@token = CfDJ8GsrYTr5WJ9OnYh5kwI25GZUhR1685iPJUOv52A3oiagxcUQ3wV8JVje056suY9_44G8dQ8h-hpY-nqOjqrh3vGv9BdAKtYiJHC6TxorYn5a81-7smZ8WmpAQ1tKKU8Hc2e9GlHrn51CR_9gKiODQ-cRbNDCpFr0ADtKcd9eggPnJfFIO_-OXZU4Luvp5T62sRFa9QQv9n_SOgsbV5RkLBDGHfx5304XF5Qeg0A6NM6gJJgVpb3yS61Ztbu3w2dd5PMdOtzIt_51uUX6dO76VtzzU1hq-T8AYmd-uY98pMmwuzRPoxjx_KqWSZWi3Xzq5CuHkcAbBp7-HfQBzLSYe9lrXdU5m3I_86bmxfrw5ccqPlZscDkNOAbyXSAxVDE8PrXqy_5qWIoARD2_4UcppiPxsakOGRZPm6YywyFj4glKLk7hLsiPsLz6dZy1i7t76jzWV2dEursCyWO56ffclMqm0fUxp4j49PuUPCcR8A4t8K-UW66tn-jeW_1Z-2qO2zJRy3FonQg0JkysX6P37uCDnX__RRrRorO5NmMdJNp1R4LjUFbRCb-ot9qG9N2friIPZH57-rjRj7giToaj8ddGuP_hYxJKTEYsWm1zQ4QTEhm9XhSojDZR3OyfBG6b0YYRd6i69sgiP8Y-ag46_T6sWdvIWi32N5R282lQfNEn2hQfT0-TuwwtJg0PWlVaA3zI7X9mjgg9JrpGb2nRA4lcBnYsmYDyl-2twUUv0D83lhxTdzhOVBM0aVg45qiknGsRdaz5jcg2gLIcNSCE7BG0O-EL6g4wZllsAbD-Kbu0
 //je tøeba získat nový token, má platnost 3600 ms => 1 hodinu
 
 @Restaurants.API_HostAddress = https://localhost:7208
@@ -18,16 +18,17 @@ Authorization: Bearer {{token}}
 ###
 
 POST {{Restaurants.API_HostAddress}}/api/restaurants
+Authorization: Bearer {{token}} 
 Content-Type: application/json
 
 {
-  "name": "Test",
-  "description": "Testovací restaurace.",
-  "category": "Italian",
-  "hasDelivery": true,
-  "city": "Praha - Test",
-  "street": "Plzeò - Test",
-  "postalCode": "00-000"
+  "name": "Èeská restaurace 3",
+  "description": "Èeská, typická restaurace 3.",
+  "category": "Czech",
+  "hasDelivery": false,
+  "city": "Plzeò - Doudlevce",
+  "street": "Doudlevecká 57",
+  "postalCode": "32-600"
 }
 
 ###
@@ -36,14 +37,13 @@ DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
 
 ###
 
-PATCH {{Restaurants.API_HostAddress}}/api/restaurants/99
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
+Authorization: Bearer {{token}} 
 Content-Type: application/json
-
 {
-    "name": "Test",
-    "description": "Testovací restaurace.",
-    "category": "Italian",
-    "hasDelivery": true
+    "Name": "Test - only",
+    "Description": "Testovací restaurace",
+    "HasDelivery": true
 }
 
 ###
@@ -59,7 +59,12 @@ Content-Type: application/json
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes/2
+GET {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes/4
+Authorization: Bearer {{token}}
+###
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}/dishes/
+Authorization: Bearer {{token}}
 
 ###
 
@@ -67,7 +72,7 @@ POST {{Restaurants.API_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-  "email": "testuser@test.com",
+  "email": "owner2@test.com",
   "password": "Password1!"
 }
 
@@ -78,7 +83,7 @@ POST {{Restaurants.API_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
-  "email": "testuser@test.com",
+  "email": "owner2@test.com",
   "password": "Password1!"
 }
 
@@ -88,8 +93,29 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "dateOfBirth": "1996-08-21",
+  "dateOfBirth": "2005-07-06",
   "nationality": "Czech"
+}
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/identity/userRole
+Authorization: Bearer {{$bearerToken}}
+Content-Type: application/json
+
+{
+  //AssignUserRoleCommand
+}
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/identity/userRole
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "UserEmail": "owner2@test.com",
+    "RoleName": "Owner"
 }
 
 ###

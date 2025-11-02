@@ -21,7 +21,6 @@ public class RestaurantsRepository(RestauranstDbContext dbContext) : IRestaurant
     public async Task<Restaurant?> GetByIdAsync(int id)
     {
         var restaurant = await dbContext.Restaurants
-            .AsNoTracking()
             .Include(x => x.Dishes)
             .FirstOrDefaultAsync(x => x.Id == id);
 

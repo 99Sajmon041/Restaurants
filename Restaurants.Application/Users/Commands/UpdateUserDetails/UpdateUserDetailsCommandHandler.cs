@@ -5,7 +5,7 @@ using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
 using Restaurants.Domain.Repositories;
 
-namespace Restaurants.Application.Users.Commands;
+namespace Restaurants.Application.Users.Commands.UpdateUserDetails;
 
 public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHandler> logger,
     IUserContext userContext,
@@ -17,12 +17,8 @@ public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHan
 
         logger.LogInformation("Updating user: {UserId}, with {@Request}", user!.Id, request);
 
-        var dbUser = await userStore.FindByIdAsync(user!.Id, cancellationToken);
-
-        if (dbUser == null)
-        {
-            throw new NotFoundException(nameof(user), user!.Id);
-        }
+        var dbUser = await userStore.FindByIdAsync(user!.Id, cancellationToken)
+            ?? throw new NotFoundException(nameof(user), user!.Id);
 
         dbUser.Nationality = request.Nationality;
         dbUser.DateOfBirth = request.DateOfBirth;
